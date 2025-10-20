@@ -13,206 +13,74 @@
         
         body {
             font-family: 'Arial', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #1a6aa3 0%, #0d3c6c 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            color: #333;
         }
         
         .container {
             text-align: center;
             max-width: 100%;
-            width: 100%;
         }
         
         h1 {
             color: white;
             margin-bottom: 30px;
-            font-size: 2.2rem;
+            font-size: 2rem;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .campus-card {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
-            width: 350px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
-            position: relative;
-            padding: 25px;
-            transition: transform 0.3s ease;
-        }
-        
-        .campus-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .university-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #0d3c6c;
-        }
-        
-        .card-type {
-            background: #0d3c6c;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-        }
-        
-        .card-body {
-            display: flex;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-        
-        .student-photo {
-            width: 100px;
-            height: 120px;
-            background-color: #ddd;
-            border-radius: 10px;
-            margin-right: 20px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 0.8rem;
-        }
-        
-        .student-info {
-            text-align: left;
-            flex: 1;
-        }
-        
-        .student-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .student-id {
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .department {
-            font-size: 0.9rem;
-            color: #444;
-        }
-        
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px dashed #aaa;
-            padding-top: 15px;
-        }
-        
-        .balance {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #0d3c6c;
-        }
-        
-        .card-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .action-btn {
+        .photo-frame {
             background: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #0d3c6c;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: inline-block;
+            max-width: 100%;
         }
         
-        .action-btn:hover {
-            background: #0d3c6c;
-            color: white;
-            transform: translateY(-2px);
+        .photo {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
         }
         
         .description {
             color: white;
-            margin-top: 40px;
+            margin-top: 20px;
             font-size: 1.1rem;
             line-height: 1.5;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
         }
         
         /* 手机端优化 */
         @media (max-width: 768px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
                 margin-bottom: 20px;
             }
             
-            .campus-card {
-                width: 100%;
-                max-width: 350px;
-            }
-            
-            .card-actions {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .action-btn {
-                width: 80%;
+            .photo-frame {
+                padding: 10px;
             }
             
             .description {
                 font-size: 1rem;
-                margin-top: 30px;
+                margin-top: 15px;
             }
         }
         
         @media (max-width: 480px) {
             h1 {
-                font-size: 1.5rem;
+                font-size: 1.3rem;
             }
             
             body {
                 padding: 15px;
-            }
-            
-            .campus-card {
-                padding: 20px;
-            }
-            
-            .student-photo {
-                width: 80px;
-                height: 100px;
             }
         }
     </style>
@@ -221,37 +89,12 @@
     <div class="container">
         <h1>电子校园卡</h1>
         
-        <div class="card-container">
-            <div class="campus-card">
-                <div class="card-header">
-                    <div class="university-name">科技大学</div>
-                    <div class="card-type">学生卡</div>
-                </div>
-                
-                <div class="card-body">
-                    <div class="student-photo">学生照片</div>
-                    <div class="student-info">
-                        <div class="student-name">张三</div>
-                        <div class="student-id">学号: 20230001</div>
-                        <div class="department">计算机科学与技术学院</div>
-                    </div>
-                </div>
-                
-                <div class="card-footer">
-                    <div>余额</div>
-                    <div class="balance">¥156.80</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card-actions">
-            <button class="action-btn">充值</button>
-            <button class="action-btn">消费记录</button>
-            <button class="action-btn">挂失/解挂</button>
+        <div class="photo-frame">
+            <img src="https://via.placeholder.com/400x300?text=校园卡照片" alt="校园卡照片" class="photo">
         </div>
         
         <div class="description">
-            电子校园卡是您在校园内的身份凭证和支付工具，可用于食堂消费、图书馆借阅、门禁通行等。请妥善保管，如有遗失请及时挂失。
+            这是您的电子校园卡，可用于校园内的各种场景。
         </div>
     </div>
 </body>
