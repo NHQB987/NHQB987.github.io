@@ -12,183 +12,247 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #000;
-            overflow: hidden;
-            height: 100vh;
-            display: grid;
-            place-items: center;
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1a6aa3 0%, #0d3c6c 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
         }
         
-        .photo-container {
-            width: 100%;
-            height: 100%;
-            display: grid;
-            place-items: center;
-            position: relative;
-        }
-        
-        .photo {
+        .container {
+            text-align: center;
             max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            display: block;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            width: 100%;
         }
         
-        .photo.loaded {
-            opacity: 1;
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
         
-        .loading {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s linear infinite;
-            z-index: 10;
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
         }
         
-        .progress-bar {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            width: 200px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
+        .campus-card {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            width: 350px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             overflow: hidden;
-            display: none;
+            position: relative;
+            padding: 25px;
+            transition: transform 0.3s ease;
         }
         
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: #fff;
-            transition: width 0.3s ease;
+        .campus-card:hover {
+            transform: translateY(-5px);
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
         
-        /* 移动设备优化 */
+        .university-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0d3c6c;
+        }
+        
+        .card-type {
+            background: #0d3c6c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .card-body {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .student-photo {
+            width: 100px;
+            height: 120px;
+            background-color: #ddd;
+            border-radius: 10px;
+            margin-right: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.8rem;
+        }
+        
+        .student-info {
+            text-align: left;
+            flex: 1;
+        }
+        
+        .student-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .student-id {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .department {
+            font-size: 0.9rem;
+            color: #444;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px dashed #aaa;
+            padding-top: 15px;
+        }
+        
+        .balance {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #0d3c6c;
+        }
+        
+        .card-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #0d3c6c;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: #0d3c6c;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .description {
+            color: white;
+            margin-top: 40px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 手机端优化 */
         @media (max-width: 768px) {
-            .photo {
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 20px;
+            }
+            
+            .campus-card {
                 width: 100%;
-                height: auto;
+                max-width: 350px;
             }
             
-            /* 针对竖屏照片优化 */
-            @media (orientation: portrait) {
-                .photo {
-                    width: auto;
-                    height: 100%;
-                }
+            .card-actions {
+                flex-direction: column;
+                align-items: center;
             }
             
-            .progress-bar {
-                width: 120px;
-                bottom: 15px;
-                left: 15px;
+            .action-btn {
+                width: 80%;
+            }
+            
+            .description {
+                font-size: 1rem;
+                margin-top: 30px;
             }
         }
         
-        /* 防止图片过小导致显示问题 */
-        @media (min-width: 1200px) {
-            .photo {
-                max-width: 90vw;
-                max-height: 90vh;
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            body {
+                padding: 15px;
+            }
+            
+            .campus-card {
+                padding: 20px;
+            }
+            
+            .student-photo {
+                width: 80px;
+                height: 100px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="photo-container">
-        <!-- 初始显示一个低质量占位符，快速显示 -->
-        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxMTExMTEiLz48L3N2Zz4=" 
-             alt="" 
-             class="photo" 
-             id="mainPhoto">
-        <div class="loading" id="loadingIndicator"></div>
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-fill" id="progressFill"></div>
+    <div class="container">
+        <h1>电子校园卡</h1>
+        
+        <div class="card-container">
+            <div class="campus-card">
+                <div class="card-header">
+                    <div class="university-name">科技大学</div>
+                    <div class="card-type">学生卡</div>
+                </div>
+                
+                <div class="card-body">
+                    <div class="student-photo">学生照片</div>
+                    <div class="student-info">
+                        <div class="student-name">张三</div>
+                        <div class="student-id">学号: 20230001</div>
+                        <div class="department">计算机科学与技术学院</div>
+                    </div>
+                </div>
+                
+                <div class="card-footer">
+                    <div>余额</div>
+                    <div class="balance">¥156.80</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-actions">
+            <button class="action-btn">充值</button>
+            <button class="action-btn">消费记录</button>
+            <button class="action-btn">挂失/解挂</button>
+        </div>
+        
+        <div class="description">
+            电子校园卡是您在校园内的身份凭证和支付工具，可用于食堂消费、图书馆借阅、门禁通行等。请妥善保管，如有遗失请及时挂失。
         </div>
     </div>
-
-    <script>
-        // 图片预加载和渐进式加载
-        document.addEventListener('DOMContentLoaded', function() {
-            const photo = document.getElementById('mainPhoto');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const progressBar = document.getElementById('progressBar');
-            const progressFill = document.getElementById('progressFill');
-            
-            // 使用相对路径指向photo.jpg
-            const imageUrl = 'photo.jpg';
-            
-            // 创建新的Image对象进行预加载
-            const img = new Image();
-            
-            // 监听加载进度（如果浏览器支持）
-            if ('onprogress' in img) {
-                img.onprogress = function(e) {
-                    if (e.lengthComputable) {
-                        const percentComplete = (e.loaded / e.total) * 100;
-                        progressFill.style.width = percentComplete + '%';
-                    }
-                };
-            }
-            
-            // 图片开始加载时显示进度条
-            img.onloadstart = function() {
-                progressBar.style.display = 'block';
-            };
-            
-            // 图片加载完成
-            img.onload = function() {
-                // 将加载的图片设置为显示的图片
-                photo.src = imageUrl;
-                photo.classList.add('loaded');
-                
-                // 隐藏加载指示器和进度条
-                loadingIndicator.style.display = 'none';
-                progressBar.style.display = 'none';
-            };
-            
-            // 图片加载错误处理
-            img.onerror = function() {
-                console.error('图片加载失败，请确保photo.jpg文件存在');
-                loadingIndicator.style.display = 'none';
-                progressBar.style.display = 'none';
-                
-                // 可以在这里添加错误处理，比如显示默认图片
-                photo.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiM0NDQiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+5Zu+54mH5paH5Lu25LiN6IO95Li656m6PC90ZXh0Pjwvc3ZnPg==';
-                photo.classList.add('loaded');
-            };
-            
-            // 开始加载图片
-            img.src = imageUrl;
-            
-            // 如果浏览器支持，添加优先级提示
-            if (photo.fetchPriority) {
-                photo.fetchPriority = 'high';
-            }
-            
-            // 如果浏览器支持，添加预加载链接
-            const preloadLink = document.createElement('link');
-            preloadLink.rel = 'preload';
-            preloadLink.as = 'image';
-            preloadLink.href = imageUrl;
-            document.head.appendChild(preloadLink);
-        });
-    </script>
 </body>
 </html>
-
