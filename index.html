@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>照片展示</title>
+    <title>电子校园卡</title>
     <style>
         * {
             margin: 0;
@@ -35,7 +35,12 @@
             height: auto;
             object-fit: contain;
             display: block;
-            animation: fadeIn 1.5s ease-out;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .photo.loaded {
+            opacity: 1;
         }
         
         .loading {
@@ -49,19 +54,28 @@
             z-index: 10;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .progress-bar {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: #fff;
+            transition: width 0.3s ease;
         }
         
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-        
-        /* 隐藏加载动画当图片加载完成后 */
-        .photo.loaded ~ .loading {
-            display: none;
         }
         
         /* 移动设备优化 */
@@ -78,6 +92,12 @@
                     height: 100%;
                 }
             }
+            
+            .progress-bar {
+                width: 120px;
+                bottom: 15px;
+                left: 15px;
+            }
         }
         
         /* 防止图片过小导致显示问题 */
@@ -91,31 +111,87 @@
 </head>
 <body>
     <div class="photo-container">
-        <img src="YOUR_PHOTO_URL_HERE" alt="" class="photo" id="mainPhoto">
-        <div class="loading"></div>
+        <!-- 低质量图片占位符，快速显示 -->
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxMTExMTEiLz48L3N2Zz4=" 
+             alt="" 
+             class="photo" 
+             id="mainPhoto">
+        <div class="loading" id="loadingIndicator"></div>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
     </div>
 
     <script>
-        // 图片加载处理
+        // 图片预加载和渐进式加载
         document.addEventListener('DOMContentLoaded', function() {
             const photo = document.getElementById('mainPhoto');
-            const loading = document.querySelector('.loading');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
             
-            // 当图片加载完成时
-            photo.addEventListener('load', function() {
-                this.classList.add('loaded');
-            });
+            // 请将此处替换为您的图片URL
+            const imageUrl = 'photo.jpg';
             
-            // 如果图片已经缓存，直接显示
-            if (photo.complete) {
-                photo.classList.add('loaded');
+            // 如果图片URL未设置，显示错误
+            if (imageUrl === 'photo.jpg') {
+                console.error('请设置图片URL');
+                loadingIndicator.style.display = 'none';
+                return;
             }
             
-            // 处理图片加载错误
-            photo.addEventListener('error', function() {
-                console.error('图片加载失败，请检查图片URL');
+            // 创建新的Image对象进行预加载
+            const img = new Image();
+            
+            // 监听加载进度（如果浏览器支持）
+            if ('onprogress' in img) {
+                img.onprogress = function(e) {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        progressFill.style.width = percentComplete + '%';
+                    }
+                };
+            }
+            
+            // 图片开始加载时显示进度条
+            img.onloadstart = function() {
+                progressBar.style.display = 'block';
+            };
+            
+            // 图片加载完成
+            img.onload = function() {
+                // 将加载的图片设置为显示的图片
+                photo.src = imageUrl;
+                photo.classList.add('loaded');
+                
+                // 隐藏加载指示器和进度条
+                loadingIndicator.style.display = 'none';
+                progressBar.style.display = 'none';
+            };
+            
+            // 图片加载错误处理
+            img.onerror = function() {
+                console.error('图片加载失败，请检查URL: ' + imageUrl);
+                loadingIndicator.style.display = 'none';
+                progressBar.style.display = 'none';
+                
                 // 可以在这里添加错误处理，比如显示默认图片
-            });
+            };
+            
+            // 开始加载图片
+            img.src = imageUrl;
+            
+            // 如果浏览器支持，添加优先级提示
+            if (photo.fetchPriority) {
+                photo.fetchPriority = 'high';
+            }
+            
+            // 如果浏览器支持，添加预加载链接
+            const preloadLink = document.createElement('link');
+            preloadLink.rel = 'preload';
+            preloadLink.as = 'image';
+            preloadLink.href = imageUrl;
+            document.head.appendChild(preloadLink);
         });
     </script>
 </body>
