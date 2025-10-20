@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的照片</title>
+    <title>照片展示</title>
     <style>
         * {
             margin: 0;
@@ -12,91 +12,111 @@
         }
         
         body {
-            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #000;
+            overflow: hidden;
+            height: 100vh;
+            display: grid;
+            place-items: center;
         }
         
-        .container {
-            text-align: center;
-            max-width: 100%;
-        }
-        
-        h1 {
-            color: white;
-            margin-bottom: 30px;
-            font-size: 2rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .photo-frame {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            display: inline-block;
-            max-width: 100%;
+        .photo-container {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            position: relative;
         }
         
         .photo {
             max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
-            border-radius: 10px;
+            object-fit: contain;
             display: block;
+            animation: fadeIn 1.5s ease-out;
         }
         
-        .description {
-            color: white;
-            margin-top: 20px;
-            font-size: 1.1rem;
-            line-height: 1.5;
+        .loading {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s linear infinite;
+            z-index: 10;
         }
         
-        /* 手机端优化 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 隐藏加载动画当图片加载完成后 */
+        .photo.loaded ~ .loading {
+            display: none;
+        }
+        
+        /* 移动设备优化 */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
-                margin-bottom: 20px;
+            .photo {
+                width: 100%;
+                height: auto;
             }
             
-            .photo-frame {
-                padding: 10px;
-            }
-            
-            .description {
-                font-size: 1rem;
-                margin-top: 15px;
+            /* 针对竖屏照片优化 */
+            @media (orientation: portrait) {
+                .photo {
+                    width: auto;
+                    height: 100%;
+                }
             }
         }
         
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.3rem;
-            }
-            
-            body {
-                padding: 15px;
+        /* 防止图片过小导致显示问题 */
+        @media (min-width: 1200px) {
+            .photo {
+                max-width: 90vw;
+                max-height: 90vh;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>欢迎欣赏我的照片</h1>
-        
-        <div class="photo-frame">
-            <img src="photo.jpg" alt="我的照片" class="photo">
-        </div>
-        
-        <div class="description">
-            <p>这张照片记录了我最珍贵的时刻</p>
-            <p>感谢您的浏览！</p>
-        </div>
+    <div class="photo-container">
+        <img src="YOUR_PHOTO_URL_HERE" alt="" class="photo" id="mainPhoto">
+        <div class="loading"></div>
     </div>
+
+    <script>
+        // 图片加载处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const photo = document.getElementById('mainPhoto');
+            const loading = document.querySelector('.loading');
+            
+            // 当图片加载完成时
+            photo.addEventListener('load', function() {
+                this.classList.add('loaded');
+            });
+            
+            // 如果图片已经缓存，直接显示
+            if (photo.complete) {
+                photo.classList.add('loaded');
+            }
+            
+            // 处理图片加载错误
+            photo.addEventListener('error', function() {
+                console.error('图片加载失败，请检查图片URL');
+                // 可以在这里添加错误处理，比如显示默认图片
+            });
+        });
+    </script>
 </body>
 </html>
