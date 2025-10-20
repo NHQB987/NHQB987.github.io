@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>电子校园卡</title>
+    <title>照片展示</title>
     <style>
         * {
             margin: 0;
@@ -36,7 +36,7 @@
             object-fit: contain;
             display: block;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.3s ease;
         }
         
         .photo.loaded {
@@ -111,7 +111,7 @@
 </head>
 <body>
     <div class="photo-container">
-        <!-- 低质量图片占位符，快速显示 -->
+        <!-- 初始显示一个低质量占位符，快速显示 -->
         <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiMxMTExMTEiLz48L3N2Zz4=" 
              alt="" 
              class="photo" 
@@ -130,15 +130,8 @@
             const progressBar = document.getElementById('progressBar');
             const progressFill = document.getElementById('progressFill');
             
-            // 请将此处替换为您的图片URL
+            // 使用相对路径指向photo.jpg
             const imageUrl = 'photo.jpg';
-            
-            // 如果图片URL未设置，显示错误
-            if (imageUrl === 'photo.jpg') {
-                console.error('请设置图片URL');
-                loadingIndicator.style.display = 'none';
-                return;
-            }
             
             // 创建新的Image对象进行预加载
             const img = new Image();
@@ -171,11 +164,13 @@
             
             // 图片加载错误处理
             img.onerror = function() {
-                console.error('图片加载失败，请检查URL: ' + imageUrl);
+                console.error('图片加载失败，请确保photo.jpg文件存在');
                 loadingIndicator.style.display = 'none';
                 progressBar.style.display = 'none';
                 
                 // 可以在这里添加错误处理，比如显示默认图片
+                photo.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiM0NDQiLz48dGV4dCB4PSI1MCUiIHk9IjUwJSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE4IiBmaWxsPSIjZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+5Zu+54mH5paH5Lu25LiN6IO95Li656m6PC90ZXh0Pjwvc3ZnPg==';
+                photo.classList.add('loaded');
             };
             
             // 开始加载图片
